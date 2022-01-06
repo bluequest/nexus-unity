@@ -5,6 +5,12 @@
 
 Open `Nexus.Client.sln` in Visual Studio. Edit and run tests.
 
+  1) Download Visual Studio: https://visualstudio.microsoft.com/
+  2) Install the Unity and Desktop workloads
+  3) Open solution, then navigate to `Nexus.Client.sln` and select it
+  4) In the toolbar, select Build > Build Solution to build the three projects
+  5) Right-click on the test project and select "Run Tests" in order to execute the unit tests
+
 ## Nexus.Client.Unity.Sample
 Demonstration application for Nexus service. Open the project in Unity and hit play.
 
