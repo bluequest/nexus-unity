@@ -1,0 +1,10 @@
+{
+  "name": "nexus.client.unity",
+  "version": "1.0.0",
+  "displayName": "Nexus Unity Client",
+  "description": "Connect to Nexus.gg's service.",
+  "author": {
+    "name": "Nexus",
+    "url": "https://www.nexus.gg"
+  }
+}

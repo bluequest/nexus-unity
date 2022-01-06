@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nexus.Client", "Nexus.Client\Nexus.Client\Nexus.Client.csproj", "{708B8F18-B1AD-44CE-86E1-7CD7C86A6760}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nexus.Client.Test", "Nexus.Client\Nexus.Client.Test\Nexus.Client.Test.csproj", "{05F158D6-B294-40DB-80AC-2EA82E44667D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nexus.Client.Unity", "Nexus.Client.Unity\Nexus.Client.Unity.csproj", "{8A965537-09A0-41FF-947B-FB3D65FA93BF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{708B8F18-B1AD-44CE-86E1-7CD7C86A6760}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{708B8F18-B1AD-44CE-86E1-7CD7C86A6760}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{708B8F18-B1AD-44CE-86E1-7CD7C86A6760}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{708B8F18-B1AD-44CE-86E1-7CD7C86A6760}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05F158D6-B294-40DB-80AC-2EA82E44667D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05F158D6-B294-40DB-80AC-2EA82E44667D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05F158D6-B294-40DB-80AC-2EA82E44667D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05F158D6-B294-40DB-80AC-2EA82E44667D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A965537-09A0-41FF-947B-FB3D65FA93BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A965537-09A0-41FF-947B-FB3D65FA93BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A965537-09A0-41FF-947B-FB3D65FA93BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A965537-09A0-41FF-947B-FB3D65FA93BF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
