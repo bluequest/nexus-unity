@@ -1,8 +1,8 @@
 # Getting Started
 ## Nexus.Client
-.NET API for interacting with Nexus's service.
+.NET API for interacting with Nexus's service. Edit and run tests.
 
-Open `Nexus.Client.sln` in Visual Studio. Edit and run tests.
+Open `Nexus.Client.sln` in Visual Studio.
 
   1) Download Visual Studio: https://visualstudio.microsoft.com/
   2) Install the Unity and Desktop workloads
@@ -30,6 +30,3 @@ Demonstration application for Nexus service. Open the project in Unity and hit p
   2) Install Unity via the Hub -- 2020.3.25f1 is known to work
   3) Add a project to the Hub, click "Add", then navigate to `Nexus.Client.Unity.Sample` and click "Select Folder"
   4) Wait for the project to open then press the play button in the top center
-  
-## Updating the Library
-Making changes to `Nexus.Client` will not automatically be picked up by `Nexus.Client.Unity`. After building the client the DLL must be copied to `Nexus.Client.Unity/Assets/nexus.client.unity/Runtime/Nexus.Client.dll`. Changes to the unity client should automatically appear in the sample appliation.
