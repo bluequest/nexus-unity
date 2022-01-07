@@ -10,6 +10,7 @@ Open `Nexus.Client.sln` in Visual Studio. Edit and run tests.
   4) In the toolbar, select Build > Build Solution to build the three projects
   5) Right-click on the test project and select "Run Tests" in order to execute the unit tests
 
+ > Note: You may receive a warning and see that the Nexus.Client.Unity project is not found. This is expected until you complete the next step.
  > Note: If you receive a warning about not having .NET 4.7.2 installed you can install the Developer Pack here: https://dotnet.microsoft.com/en-us/download/visual-studio-sdks
 
 ## Nexus.Client.Unity
