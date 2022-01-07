@@ -5,4 +5,11 @@
         <LangVersion>8</LangVersion>
     </PropertyGroup>
 
+    <Target Name="CopyDLL" AfterTargets="AfterBuild">
+        <Message Text="Copying DLL to Unity client" Importance="High" />
+
+        <Copy SourceFiles="$(TargetDir)$(ProjectName).dll" DestinationFolder="$(SolutionDir)$(ProjectName).Unity/Assets/nexus.client.unity/Runtime" />
+
+        <Message Text="Copied DLL" Importance="High" />
+    </Target>
 </Project>
