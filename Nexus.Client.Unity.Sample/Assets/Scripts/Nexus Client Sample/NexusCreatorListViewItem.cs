@@ -7,7 +7,6 @@ namespace Nexus.Client.Unity.Sample
     /// <summary>
     /// A single creator in the list view.
     /// </summary>
-    [RequireComponent(typeof(Button))]
     [DisallowMultipleComponent]
     public sealed class NexusCreatorListViewItem : MonoBehaviour
     {
@@ -28,16 +27,16 @@ namespace Nexus.Client.Unity.Sample
         private void Awake()
         {
             // register for click
-            this.GetComponent<Button>().onClick.AddListener(this.OnClick);
+            this.GetComponent<Toggle>().onValueChanged.AddListener(this.OnClick);
         }
 
         private void OnDestroy()
         {
             // unregister for click
-            this.GetComponent<Button>().onClick.RemoveListener(this.OnClick);
+            this.GetComponent<Toggle>().onValueChanged.RemoveListener(this.OnClick);
         }
 
-        private void OnClick()
+        private void OnClick(bool isOn)
         {
             if (this.detailsPane != null)
             {
