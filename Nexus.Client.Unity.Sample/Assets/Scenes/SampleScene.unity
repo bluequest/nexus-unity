@@ -783,7 +783,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   label: {fileID: 1066370920}
-  detailsPane: {fileID: 0}
 --- !u!1001 &192323195
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4602,9 +4601,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d171019cc5e48118413d451f6d2ad52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameEvents:
+  gameEvents:
   - {fileID: 11400000, guid: c5a2f62d3c4d3c94480e72577b15ece0, type: 2}
-  OnEventRaised:
+  onEventRaised:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1204307744}
@@ -4631,9 +4630,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d171019cc5e48118413d451f6d2ad52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameEvents:
+  gameEvents:
   - {fileID: 11400000, guid: fb23c995b4f50b547b05499ad8c44505, type: 2}
-  OnEventRaised:
+  onEventRaised:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1204307744}
@@ -5240,7 +5239,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1341205871}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -7003,7 +7002,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1736781580}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0

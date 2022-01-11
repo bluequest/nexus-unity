@@ -8,6 +8,9 @@ namespace Nexus.Client.Unity.Sample
     [DisallowMultipleComponent]
     public sealed class NexusSampleApp : MonoBehaviour
     {
+        /// <summary>
+        /// Singleton instance to facilitate setting selected creator by list view.
+        /// </summary>
         private static NexusSampleApp instance;
         
         [Tooltip("Attempt to open the shop when raised")] [SerializeField]
@@ -26,8 +29,10 @@ namespace Nexus.Client.Unity.Sample
         [Tooltip("Animator/state machine used by the app")] [SerializeField]
         private Animator animator = null;
 
-        [SerializeField] private float delayBeforePurchasing = 1f;
+        [Tooltip("Time till moving from purchasing to review purchase, emulates server latency")] [SerializeField]
+        private float delayBeforePurchasing = 1f;
 
+        // animator triggers. see Skoot_Animator for more information.
         private static readonly int OpenShopTrigger = Animator.StringToHash("Open Shop");
 
         private static readonly int CloseShopTrigger = Animator.StringToHash("Close Shop");
@@ -36,14 +41,24 @@ namespace Nexus.Client.Unity.Sample
 
         private static readonly int ReviewPurchaseTrigger = Animator.StringToHash("Review Purchase");
 
+        /// <summary>
+        /// Current state of the app. App is a FSM which moves between four states.
+        /// See Skoot_Animator for more information.
+        /// </summary>
         private NexusSampleAppState currentState = NexusSampleAppState.Home;
 
+        /// <summary>
+        /// Current creator. Set to the first creator from Nexus.gg initially.
+        /// </summary>
         private NexusCreator selectedCreator;
 
         public static NexusSampleApp Instance => NexusSampleApp.instance;
 
         public NexusCreator SelectedCreator => selectedCreator;
 
+        /// <summary>
+        /// Update the selected creator, raise a change event trigger refresh in the UI.
+        /// </summary>
         internal void SetSelectedCreator(NexusCreator creator)
         {
             this.selectedCreator = creator;
@@ -52,12 +67,17 @@ namespace Nexus.Client.Unity.Sample
 
         private void Awake()
         {
-            this.openShop.RegisterListener(this.TryOpenShop);
-            this.closeShop.RegisterListener(this.TryCloseShop);
-            this.purchaseFromShop.RegisterListener(this.TryPurchase);
-            
             if (NexusSampleApp.instance == null)
             {
+                // register for state change events from the UI, e.g. clicking on the store button
+                // this happens here so we don't register for new instances after the first. also
+                // note we do not unregister the listeners on destroy as new instances would trigger
+                // unregister when destroyed -- we don't need to worry about unregistering, though
+                // as this is a singleton which persists as long as the game is running
+                this.openShop.RegisterListener(this.TryOpenShop);
+                this.closeShop.RegisterListener(this.TryCloseShop);
+                this.purchaseFromShop.RegisterListener(this.TryPurchase);
+                
                 // first instance of singleton, mark as dont destroy so it persists across scenes, register a basic
                 // trace listener so logging from NexusClient appears in Unity's console.
                 NexusSampleApp.instance = this;
@@ -70,15 +90,9 @@ namespace Nexus.Client.Unity.Sample
             }
         }
 
-        private void OnDestroy()
-        {
-            this.openShop.UnregisterListener(this.TryOpenShop);
-            this.closeShop.UnregisterListener(this.TryCloseShop);
-            this.purchaseFromShop.UnregisterListener(this.TryPurchase);
-        }
-
         private void TryOpenShop()
         {
+            // invoked when opening the skoot shop from the home screen
             if (this.currentState == NexusSampleAppState.Home)
             {
                 this.animator.SetTrigger(OpenShopTrigger);
@@ -88,6 +102,8 @@ namespace Nexus.Client.Unity.Sample
 
         private void TryCloseShop()
         {
+            // invoked when clicking the "X" button in the shop screen
+            // ignore if the player is in the process of purchasing something
             if (this.currentState == NexusSampleAppState.Shopping ||
                 this.currentState == NexusSampleAppState.ReviewingPurchase)
             {
@@ -96,8 +112,9 @@ namespace Nexus.Client.Unity.Sample
             }
         }
 
-        private async void TryPurchase()
+        private void TryPurchase()
         {
+            // invoked when clicking the purchase button in the shop
             if (this.currentState == NexusSampleAppState.Shopping && this.selectedCreator != null)
             {
                 this.StartCoroutine(this.TryPurchaseAsync());

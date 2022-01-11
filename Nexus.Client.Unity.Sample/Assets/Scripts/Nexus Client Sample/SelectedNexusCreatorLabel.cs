@@ -4,12 +4,21 @@ using UnityEngine;
 
 namespace Nexus.Client.Unity.Sample
 {
+    /// <summary>
+    /// Sets the creator's name for the currently selected creator whenever the `refresh` event is raised.
+    /// </summary>
     [RequireComponent(typeof(TMP_Text))]
     [DisallowMultipleComponent]
     public sealed class SelectedNexusCreatorLabel : MonoBehaviour
     {
+        /// <summary>
+        /// Triggers the label to refresh with the latest creator.
+        /// </summary>
         [SerializeField] private NexusGameEvent refresh = null;
 
+        /// <summary>
+        /// Optional. Sets the label using the given format string.
+        /// </summary>
         [SerializeField] private string formatString = null;
         
         private TMP_Text label;
@@ -37,6 +46,8 @@ namespace Nexus.Client.Unity.Sample
             string text;
             if (creator == null)
             {
+                // this will happen `OnEnable` but should refresh as soon as the `NexusCreatorListView` has
+                // pulled down the list of creators
                 text = "lorem ipsum";
             }
             else if (string.IsNullOrEmpty(this.formatString))

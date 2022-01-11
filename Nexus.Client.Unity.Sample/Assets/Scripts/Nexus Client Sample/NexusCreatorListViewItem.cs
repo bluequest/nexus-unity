@@ -14,9 +14,6 @@ namespace Nexus.Client.Unity.Sample
         [Tooltip("Show the creator's name in the list view.")] [SerializeField]
         private TMP_Text label = null;
 
-        [Tooltip("Show creator details using this details pane. Optional")] [SerializeField]
-        private NexusCreatorDetailsPane detailsPane = null;
-
         private NexusCreator creator;
 
         internal void Show(NexusCreator creator)

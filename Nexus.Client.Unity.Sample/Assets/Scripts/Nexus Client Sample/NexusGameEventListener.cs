@@ -3,15 +3,21 @@ using UnityEngine.Events;
 
 namespace Nexus.Client.Unity.Sample
 {
+    /// <summary>
+    /// Re-usable listener for <see cref="NexusGameEvent"/> in the scene. 
+    /// </summary>
     public sealed class NexusGameEventListener : MonoBehaviour
     {
-        public NexusGameEvent[] GameEvents;
+        [SerializeField] private NexusGameEvent[] gameEvents = null;
 
-        public UnityEvent OnEventRaised;
+        /// <summary>
+        /// Callback for custom event handling.
+        /// </summary>
+        [SerializeField] private UnityEvent onEventRaised = null;
 
         private void OnEnable()
         {
-            foreach (NexusGameEvent gameEvent in this.GameEvents)
+            foreach (NexusGameEvent gameEvent in this.gameEvents)
             {
                 gameEvent.RegisterListener(this.TriggerOnEventRaised);
             }
@@ -19,7 +25,7 @@ namespace Nexus.Client.Unity.Sample
 
         private void OnDisable()
         {
-            foreach (NexusGameEvent gameEvent in this.GameEvents)
+            foreach (NexusGameEvent gameEvent in this.gameEvents)
             {
                 gameEvent.UnregisterListener(this.TriggerOnEventRaised);
             }
@@ -27,7 +33,7 @@ namespace Nexus.Client.Unity.Sample
 
         private void TriggerOnEventRaised()
         {
-            this.OnEventRaised.Invoke();
+            this.onEventRaised.Invoke();
         }
     }
 }
