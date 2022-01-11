@@ -99,6 +99,12 @@ namespace Nexus.Client.Unity.Sample
                 nexusCreatorListViewItem.Show(creator);
                 nexusCreatorListViewItem.gameObject.SetActive(true);
             }
+
+            // set currently selected creator if not already set
+            if (NexusSampleApp.Instance.SelectedCreator == null && this.creators.Creators.Length > 0)
+            {
+                NexusSampleApp.Instance.SetSelectedCreator(this.creators.Creators[0]);
+            }
         }
     }
 }

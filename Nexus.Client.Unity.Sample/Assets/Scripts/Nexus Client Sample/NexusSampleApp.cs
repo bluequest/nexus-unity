@@ -2,9 +2,12 @@ using UnityEngine;
 
 namespace Nexus.Client.Unity.Sample
 {
+    [DefaultExecutionOrder(-10)]
     [DisallowMultipleComponent]
     public sealed class NexusSampleApp : MonoBehaviour
     {
+        private static NexusSampleApp instance;
+        
         [Tooltip("Attempt to open the shop when raised")] [SerializeField]
         private NexusGameEvent openShop = null;
 
@@ -13,6 +16,9 @@ namespace Nexus.Client.Unity.Sample
 
         [Tooltip("Attempt to purchase item from the shop when raised")] [SerializeField]
         private NexusGameEvent purchaseFromShop = null;
+
+        [Tooltip("Invoked whenever the current selected creator changes")] [SerializeField]
+        private NexusGameEvent selectedCreatorChanged = null;
         
         [Space]
         [Tooltip("Animator/state machine used by the app")] [SerializeField]
@@ -28,11 +34,36 @@ namespace Nexus.Client.Unity.Sample
 
         private NexusSampleAppState currentState = NexusSampleAppState.Home;
 
+        private NexusCreator selectedCreator;
+
+        public static NexusSampleApp Instance => NexusSampleApp.instance;
+
+        public NexusCreator SelectedCreator => selectedCreator;
+
+        internal void SetSelectedCreator(NexusCreator creator)
+        {
+            this.selectedCreator = creator;
+            this.selectedCreatorChanged.RaiseEvent();
+        }
+
         private void Awake()
         {
             this.openShop.RegisterListener(this.TryOpenShop);
             this.closeShop.RegisterListener(this.TryCloseShop);
             this.purchaseFromShop.RegisterListener(this.TryPurchase);
+            
+            if (NexusSampleApp.instance == null)
+            {
+                // first instance of singleton, mark as dont destroy so it persists across scenes, register a basic
+                // trace listener so logging from NexusClient appears in Unity's console.
+                NexusSampleApp.instance = this;
+                GameObject.DontDestroyOnLoad(this.gameObject);
+            }
+            else
+            {
+                // redundant instance of singleton, destroy
+                GameObject.DestroyImmediate(this.gameObject);
+            }
         }
 
         private void OnDestroy()
