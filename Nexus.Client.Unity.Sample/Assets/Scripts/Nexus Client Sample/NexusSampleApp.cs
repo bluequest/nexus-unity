@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Nexus.Client.Unity.Sample
@@ -23,6 +25,8 @@ namespace Nexus.Client.Unity.Sample
         [Space]
         [Tooltip("Animator/state machine used by the app")] [SerializeField]
         private Animator animator = null;
+
+        [SerializeField] private float delayBeforePurchasing = 1f;
 
         private static readonly int OpenShopTrigger = Animator.StringToHash("Open Shop");
 
@@ -94,20 +98,33 @@ namespace Nexus.Client.Unity.Sample
 
         private async void TryPurchase()
         {
-            if (this.currentState == NexusSampleAppState.Shopping)
+            if (this.currentState == NexusSampleAppState.Shopping && this.selectedCreator != null)
             {
-                // enter purchasing state
-                this.currentState = NexusSampleAppState.Purchasing;
-                this.animator.SetTrigger(PurchaseFromShopTrigger);
-                
-                // trigger purchase on server, wait for results
-                // TODO
-                bool result = await NexusManager.Instance.Client.AttributeCreator();
-                
-                // show confirmation to player
-                this.currentState = NexusSampleAppState.ReviewingPurchase;
-                this.animator.SetTrigger(ReviewPurchaseTrigger);
+                this.StartCoroutine(this.TryPurchaseAsync());
             }
+        }
+
+        private IEnumerator TryPurchaseAsync()
+        {
+            // enter purchasing state
+            this.currentState = NexusSampleAppState.Purchasing;
+            this.animator.SetTrigger(PurchaseFromShopTrigger);
+            
+            // wait a spell to emulate talking to the server, show the progress ui
+            for (float t = 0; t < this.delayBeforePurchasing; t += Time.deltaTime)
+            {
+                yield return null;
+            }
+
+            // trigger purchase on server, wait for results
+            // note this uses `WaitUntil` as we cannot `await` in a coroutine
+            Task<bool> task = NexusManager.Instance.Client.AttributeCreator();
+            yield return new WaitUntil(() => task.IsCompleted);
+            bool result = task.Result;
+                
+            // show confirmation to player
+            this.currentState = NexusSampleAppState.ReviewingPurchase;
+            this.animator.SetTrigger(ReviewPurchaseTrigger);
         }
 
         private enum NexusSampleAppState
