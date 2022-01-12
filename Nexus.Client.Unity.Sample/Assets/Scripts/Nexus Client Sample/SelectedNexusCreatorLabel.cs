@@ -46,8 +46,7 @@ namespace Nexus.Client.Unity.Sample
             string text;
             if (creator == null)
             {
-                // this will happen `OnEnable` but should refresh as soon as the `NexusCreatorListView` has
-                // pulled down the list of creators
+                // this will happen `OnEnable` but should refresh as soon as the Nexus creators have been retrieved
                 text = "lorem ipsum";
             }
             else if (string.IsNullOrEmpty(this.formatString))
