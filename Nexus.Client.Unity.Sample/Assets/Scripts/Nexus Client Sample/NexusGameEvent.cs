@@ -6,7 +6,6 @@ namespace Nexus.Client.Unity.Sample
     /// <summary>
     /// Static event which can be observed/raised by different parts of the Nexus Sample App.
     /// </summary>
-    [CreateAssetMenu(fileName = "Game Event", menuName = "Nexus/Sample/Nexus Game Event")]
     public sealed class NexusGameEvent : ScriptableObject
     {
         public delegate void GameEventListener();
