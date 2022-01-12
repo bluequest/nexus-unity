@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Nexus.Client.Unity.Sample
 {
-    [DefaultExecutionOrder(-10)]
+    [DefaultExecutionOrder(-10)] // lower order so it executes before list view, etc.
     [DisallowMultipleComponent]
     public sealed class NexusSampleApp : MonoBehaviour
     {
@@ -65,6 +65,9 @@ namespace Nexus.Client.Unity.Sample
         /// </summary>
         private NexusCreator selectedCreator;
 
+        /// <summary>
+        /// List of creators from Nexus.gg.
+        /// </summary>
         private NexusCreators creators;
 
         public static NexusSampleApp Instance => NexusSampleApp.instance;
