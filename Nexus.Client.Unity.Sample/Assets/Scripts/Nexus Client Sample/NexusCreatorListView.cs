@@ -13,6 +13,9 @@ namespace Nexus.Client.Unity.Sample
     [DisallowMultipleComponent]
     public sealed class NexusCreatorListView : MonoBehaviour
     {
+        [Tooltip("Refresh list view raised")] [SerializeField]
+        private NexusGameEvent refresh = null;
+        
         [Tooltip("Input used to filter creator list.")] [SerializeField]
         private TMP_InputField inputField = null;
         
@@ -22,31 +25,24 @@ namespace Nexus.Client.Unity.Sample
         [Tooltip("Delay before refreshing list view to reduce refresh rate when typing.")] [SerializeField]
         private float delayBeforeRefresh = 0.05f;
 
-        private NexusCreators creators;
-
         private void Awake()
         {
             // hide prefab list view item, register for filter changes
             this.inputField.onValueChanged.AddListener(this.OnFilterChanged);
             this.listViewItem.gameObject.SetActive(false);
+            this.refresh.RegisterListener(this.Refresh);
         }
 
         private void OnDestroy()
         {
             // unregister for filter changes
             this.inputField.onValueChanged.RemoveListener(this.OnFilterChanged);
-        }
-
-        private async void Start()
-        {
-            // retrieve the list of creators then show them in the list view
-            this.creators = await NexusManager.Instance.Client.GetCreators();
-            this.Refresh();
+            this.refresh.UnregisterListener(this.Refresh);
         }
 
         private void OnFilterChanged(string filter)
         {
-            if (this.creators != null)
+            if (NexusSampleApp.Instance.Creators != null)
             {
                 // refresh the list view, but only if we've already loaded creators successfully
                 this.Refresh();
@@ -84,12 +80,12 @@ namespace Nexus.Client.Unity.Sample
             if (string.IsNullOrEmpty(this.inputField.text))
             {
                 // no filter
-                creators = this.creators.Creators;
+                creators = NexusSampleApp.Instance.Creators.Creators;
             }
             else
             {
                 Regex regex = new Regex(string.Format(@".*{0}.*", this.inputField.text), RegexOptions.IgnoreCase);
-                creators = this.creators.Creators.Where(c => regex.IsMatch(c.Name));
+                creators = NexusSampleApp.Instance.Creators.Creators.Where(c => regex.IsMatch(c.Name));
             }
 
             // update list view
@@ -101,9 +97,9 @@ namespace Nexus.Client.Unity.Sample
             }
 
             // set currently selected creator if not already set
-            if (NexusSampleApp.Instance.SelectedCreator == null && this.creators.Creators.Length > 0)
+            if (NexusSampleApp.Instance.SelectedCreator == null && NexusSampleApp.Instance.Creators.Creators.Length > 0)
             {
-                NexusSampleApp.Instance.SetSelectedCreator(this.creators.Creators[0]);
+                NexusSampleApp.Instance.SetSelectedCreator(NexusSampleApp.Instance.Creators.Creators[0]);
             }
         }
     }

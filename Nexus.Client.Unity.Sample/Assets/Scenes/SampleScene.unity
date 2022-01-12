@@ -1846,6 +1846,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8fe5ad1cd52441db9671a25197c2799, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  refresh: {fileID: 11400000, guid: c7aeb7278f87b8a49b8cf58356022441, type: 2}
   inputField: {fileID: 1950897576}
   listViewItem: {fileID: 125584262}
   delayBeforeRefresh: 0.05
@@ -7386,11 +7387,14 @@ MonoBehaviour:
   openShop: {fileID: 11400000, guid: 35a3f6a3f2770ba44bd072300b893d16, type: 2}
   closeShop: {fileID: 11400000, guid: 4a2b20ede7e887a4fb1aac7f1261d4b1, type: 2}
   purchaseFromShop: {fileID: 11400000, guid: d6957d0dec40a4746ac85e0a1eab73f8, type: 2}
-  selectedCreatorChanged: {fileID: 11400000, guid: 99933f85a59edea44922834cd966334e, type: 2}
   openError: {fileID: 11400000, guid: bfdf9b3106e3eab41b6d6992d6efdfef, type: 2}
-  closeError: {fileID: 11400000, guid: 6f84c51dd4d9fa0489de4e18b9a69f95, type: 2}
+  selectedCreatorChanged: {fileID: 11400000, guid: 99933f85a59edea44922834cd966334e, type: 2}
+  creatorsChanged: {fileID: 11400000, guid: c7aeb7278f87b8a49b8cf58356022441, type: 2}
   animator: {fileID: 482987571}
+  listView: {fileID: 531148604}
   delayBeforePurchasing: 3
+  failGetCreators: 0
+  failPurchase: 0
 --- !u!4 &1658933536
 Transform:
   m_ObjectHideFlags: 0

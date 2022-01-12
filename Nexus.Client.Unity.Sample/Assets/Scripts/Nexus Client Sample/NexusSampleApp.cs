@@ -22,16 +22,19 @@ namespace Nexus.Client.Unity.Sample
         [Tooltip("Attempt to purchase item from the shop when raised")] [SerializeField]
         private NexusGameEvent purchaseFromShop = null;
 
-        [Tooltip("Invoked whenever the current selected creator changes")] [SerializeField]
-        private NexusGameEvent selectedCreatorChanged = null;
-
         [Tooltip("Invoked whenever an error should be shown")] [SerializeField]
         private NexusGameEvent openError = null;
+
+        [Tooltip("Invoked whenever the current selected creator changes")] [SerializeField]
+        private NexusGameEvent selectedCreatorChanged = null;
+        
+        [Tooltip("Invoked whenever the creators changes")] [SerializeField]
+        private NexusGameEvent creatorsChanged = null;
         
         [Space]
         [Tooltip("Animator/state machine used by the app")] [SerializeField]
         private Animator animator = null;
-
+        
         [Header("Testing")]
         [Tooltip("Time till moving from purchasing to review purchase, emulates server latency")] [SerializeField]
         private float delayBeforePurchasing = 1f;
@@ -62,10 +65,14 @@ namespace Nexus.Client.Unity.Sample
         /// </summary>
         private NexusCreator selectedCreator;
 
+        private NexusCreators creators;
+
         public static NexusSampleApp Instance => NexusSampleApp.instance;
 
-        public NexusCreator SelectedCreator => selectedCreator;
-        
+        internal NexusCreator SelectedCreator => this.selectedCreator;
+
+        internal NexusCreators Creators => this.creators;
+
         internal string ErrorMessage { get; private set; }
 
         /// <summary>
@@ -102,12 +109,19 @@ namespace Nexus.Client.Unity.Sample
             }
         }
 
+        private async void Start()
+        {
+            // retrieve the list of creators then show them in the list view
+            this.creators = await NexusManager.Instance.Client.GetCreators();
+            this.creatorsChanged.RaiseEvent();
+        }
+
         private void TryOpenShop()
         {
             // invoked when opening the skoot shop from the home screen
             if (this.currentState == NexusSampleAppState.Home)
             {
-                if (this.failGetCreators)
+                if (this.failGetCreators || this.creators == null || this.creators.Creators == null || this.creators.Creators.Length == 0)
                 {
                     // show error message
                     this.ShowError("Failed to get creators. Please try again.");
