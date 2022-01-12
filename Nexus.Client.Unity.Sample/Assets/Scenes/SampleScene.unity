@@ -7391,7 +7391,6 @@ MonoBehaviour:
   selectedCreatorChanged: {fileID: 11400000, guid: 99933f85a59edea44922834cd966334e, type: 2}
   creatorsChanged: {fileID: 11400000, guid: c7aeb7278f87b8a49b8cf58356022441, type: 2}
   animator: {fileID: 482987571}
-  listView: {fileID: 531148604}
   delayBeforePurchasing: 3
   failGetCreators: 0
   failPurchase: 0
