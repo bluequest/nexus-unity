@@ -24,13 +24,23 @@ namespace Nexus.Client.Unity.Sample
 
         [Tooltip("Invoked whenever the current selected creator changes")] [SerializeField]
         private NexusGameEvent selectedCreatorChanged = null;
+
+        [Tooltip("Invoked whenever an error should be shown")] [SerializeField]
+        private NexusGameEvent openError = null;
         
         [Space]
         [Tooltip("Animator/state machine used by the app")] [SerializeField]
         private Animator animator = null;
 
+        [Header("Testing")]
         [Tooltip("Time till moving from purchasing to review purchase, emulates server latency")] [SerializeField]
         private float delayBeforePurchasing = 1f;
+
+        [Tooltip("If true, opening the shop will always fail. Otherwise run normally")] [SerializeField]
+        private bool failGetCreators = false;
+
+        [Tooltip("If true, purchase will always report failure. Otherwise run normally")] [SerializeField]
+        private bool failPurchase = false;
 
         // animator triggers. see Skoot_Animator for more information.
         private static readonly int OpenShopTrigger = Animator.StringToHash("Open Shop");
@@ -55,6 +65,8 @@ namespace Nexus.Client.Unity.Sample
         public static NexusSampleApp Instance => NexusSampleApp.instance;
 
         public NexusCreator SelectedCreator => selectedCreator;
+        
+        internal string ErrorMessage { get; private set; }
 
         /// <summary>
         /// Update the selected creator, raise a change event trigger refresh in the UI.
@@ -95,8 +107,16 @@ namespace Nexus.Client.Unity.Sample
             // invoked when opening the skoot shop from the home screen
             if (this.currentState == NexusSampleAppState.Home)
             {
-                this.animator.SetTrigger(OpenShopTrigger);
-                this.currentState = NexusSampleAppState.Shopping;
+                if (this.failGetCreators)
+                {
+                    // show error message
+                    this.ShowError("Failed to get creators. Please try again.");
+                }
+                else
+                {
+                    this.animator.SetTrigger(OpenShopTrigger);
+                    this.currentState = NexusSampleAppState.Shopping;
+                }
             }
         }
 
@@ -134,14 +154,43 @@ namespace Nexus.Client.Unity.Sample
             }
 
             // trigger purchase on server, wait for results
-            // note this uses `WaitUntil` as we cannot `await` in a coroutine
-            Task<bool> task = NexusManager.Instance.Client.AttributeCreator();
-            yield return new WaitUntil(() => task.IsCompleted);
-            bool result = task.Result;
+            bool result;
+            if (this.failPurchase)
+            {
+                // skip the server call, just fail for testing purposes
+                result = false;
+            }
+            else
+            {
+                // note this uses `WaitUntil` as we cannot `await` in a coroutine
+                Task<bool> task = NexusManager.Instance.Client.AttributeCreator();
+                yield return new WaitUntil(() => task.IsCompleted);
                 
-            // show confirmation to player
-            this.currentState = NexusSampleAppState.ReviewingPurchase;
-            this.animator.SetTrigger(ReviewPurchaseTrigger);
+                // ignoring Task.Result for now as the API is in development and always returns false
+                result = true;
+            }
+
+            if (result)
+            {
+                // show confirmation to player
+                this.currentState = NexusSampleAppState.ReviewingPurchase;
+                this.animator.SetTrigger(ReviewPurchaseTrigger);
+            }
+            else
+            {
+                // show error message
+                this.ShowError("Failed to complete purchase. Please try again.");
+                
+                // return to the previous state
+                this.animator.SetTrigger(OpenShopTrigger);
+                this.currentState = NexusSampleAppState.Shopping;
+            }
+        }
+
+        private void ShowError(string message)
+        {
+            this.ErrorMessage = message;
+            this.openError.RaiseEvent();
         }
 
         private enum NexusSampleAppState
