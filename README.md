@@ -1,4 +1,18 @@
 # Getting Started
+
+Hey ya'll, here is a first-draft of our attribution API and an example Unity project showing how a purchase and attribution flow might be put together!
+
+Please remember that this API is in early beta and subject to change quite a bit over the coming days.
+
+If there are any questions please shoot me a note, [I'd love to chat!](mailto:dusty@nexus.gg)
+
+## Sample API Documentation
+- https://app.swaggerhub.com/apis-docs/nexus-gg/Attribution/1.0.1-oas3#/
+
+# Nexus - Integration Overview
+
+![Nexus - Integration Overview](https://user-images.githubusercontent.com/389949/151759774-72a2343a-d5c1-42ff-a80a-41a6e4cb002a.png)
+
 ## Nexus.Client
 .NET API for interacting with Nexus's service. Edit and run tests.
 
