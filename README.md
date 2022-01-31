@@ -11,9 +11,7 @@ Any if there are any questions please shoot me a note, [I'd love to chat!](mailt
 ## Sample API Documentation
 - https://app.swaggerhub.com/apis-docs/nexus-gg/Attribution/1.0.1-oas3#/
 
-# ..
-
-# Nexus - Integration Overview
+## Nexus - Integration Overview
 
 ![Nexus - Integration Overview](https://user-images.githubusercontent.com/389949/151759774-72a2343a-d5c1-42ff-a80a-41a6e4cb002a.png)
 
