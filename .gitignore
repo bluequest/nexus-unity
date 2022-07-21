@@ -317,3 +317,5 @@ __pycache__/
 
 # OpenCover UI analysis results
 OpenCover/
+Nexus.Client.Unity.Sample/Assets/PlayFabSDK/Shared/Public/Resources/PlayFabSharedSettings.asset
+Nexus.Client.Unity.Sample/Assets/PlayFabEditorExtensions/Editor/Resources/PlayFabEditorPrefsSO.asset
